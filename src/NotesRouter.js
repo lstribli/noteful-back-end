@@ -36,9 +36,9 @@ NotesRouter
       folder_id,
     };
     console.log(newNote);
-    if (!name) {
-      logger.error('Failed post : User did not supply note name');
-      return res.status(400).json({ error: 'note name is required' });
+    if (!name || !description || !folder_id) {
+      logger.error('Failed post : User did not supply parameters');
+      return res.status(400).json({ error: 'Please fill all fields' });
     }
     NotesService.addNote(req.app.get('db'), newNote)
       .then(note => res.status(201).json(sanitize(note)))
